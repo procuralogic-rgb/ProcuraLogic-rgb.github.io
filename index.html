@@ -34,9 +34,17 @@
             <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="hidden md:inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm tracking-tight">
                 Get Started
             </a>
-            <button class="md:hidden text-slate-900" aria-label="Menu">
+            <button id="mobileMenuBtn" class="md:hidden text-slate-900" aria-label="Menu" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
                 <iconify-icon icon="solar:hamburger-menu-linear" class="text-2xl"></iconify-icon>
             </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white/95 backdrop-blur">
+            <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-slate-600">
+                <a href="#pricing" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">Pricing</a>
+                <a href="#how" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">How it works</a>
+                <a href="#faq" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">FAQ</a>
+                <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white px-4 py-2 rounded-lg shadow-sm">Get Started</a>
+            </div>
         </div>
     </nav>
 
@@ -103,7 +111,7 @@
             <div class="text-xs font-semibold tracking-widest uppercase text-emerald-600 mb-3">Why ProcuraLogic</div>
             <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-12">Built on real procurement experience.</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div class="bg-white border border-slate-200/60 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"><span class="text-3xl font-semibold tracking-tight text-emerald-950 mb-2">10+ Years</span><span class="text-xs text-slate-500 font-medium">procurement and contract analysis</span></div>
+                <div class="bg-white border border-slate-200/60 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"><span class="text-3xl font-semibold tracking-tight text-emerald-950 mb-2">Experienced</span><span class="text-xs text-slate-500 font-medium">in procurement and contract analysis</span></div>
                 <div class="bg-white border border-slate-200/60 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"><span class="text-3xl font-semibold tracking-tight text-emerald-950 mb-2">$200M+</span><span class="text-xs text-slate-500 font-medium">in enterprise contracts managed</span></div>
                 <div class="bg-white border border-slate-200/60 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"><span class="text-3xl font-semibold tracking-tight text-emerald-950 mb-2">$2M+</span><span class="text-xs text-slate-500 font-medium">in cost savings identified</span></div>
             </div>
@@ -138,12 +146,12 @@
             <div class="bg-orange-50/50 border border-orange-100 rounded-2xl p-8 sm:p-10">
                 <div class="flex items-center gap-3 mb-6"><iconify-icon icon="solar:danger-triangle-linear" class="text-orange-500 text-2xl"></iconify-icon><h2 class="text-xl font-semibold tracking-tight text-slate-900">Don't sign until you've checked for these:</h2></div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>Auto-renewal traps:</strong>&nbsp;locked in for another year</div>
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>Hidden fee structures:</strong>&nbsp;charges buried in fine print</div>
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>One-sided termination:</strong>&nbsp;they can leave, you can't</div>
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>Vendor lock-in risks:</strong>&nbsp;switching costs that stick</div>
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>IP ownership grabs:</strong>&nbsp;your work becomes theirs</div>
-                    <div class="flex items-start gap-2 text-sm text-slate-700"><span class="text-orange-500 mt-0.5">•</span> <strong>Liability landmines:</strong>&nbsp;you carry all the risk</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>Auto-renewal traps:</strong> locked in for another year</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>Hidden fee structures:</strong> charges buried in fine print</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>One-sided termination:</strong> they can leave, you can't</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>Vendor lock-in risks:</strong> switching costs that stick</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>IP ownership grabs:</strong> your work becomes theirs</div>
+                    <div class="text-sm text-slate-700 leading-relaxed"><span class="text-orange-500">•</span> <strong>Liability landmines:</strong> you carry all the risk</div>
                 </div>
             </div>
         </section>
@@ -282,59 +290,12 @@
             </div>
         </section>
 
-        <section class="max-w-3xl mr-auto ml-auto pt-12 pb-12 space-y-4">
-            <details id="terms" class="group bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
-                <summary class="flex cursor-pointer list-none text-sm font-semibold text-slate-700 pt-4 pr-4 pb-4 pl-4 items-center justify-between"><span>Terms of Service</span><span class="transition group-open:rotate-180"><iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400"></iconify-icon></span></summary>
-                <div class="p-6 pt-0 text-xs text-slate-500 space-y-4 leading-relaxed border-t border-slate-200 mt-2 bg-white">
-                    <div class="text-[10px] text-slate-400 mb-2 pt-4">Last updated: April 2026</div>
-                    <h3 class="font-semibold text-slate-700 text-sm">1. Services</h3>
-                    <p>ProcuraLogic provides contract review, analysis, and advisory services for informational and educational purposes only. Our services are not legal advice, and ProcuraLogic is not a law firm. We do not practice law, represent clients in legal matters, or provide legal opinions. You should always consult a licensed attorney for legal advice specific to your situation.</p>
-                    <p>ProcuraLogic may use automated tools, software, or artificial intelligence ("AI") to assist with contract review, analysis, and drafting of deliverables. Final analysis is prepared or reviewed by a human before delivery. You acknowledge and agree that AI and automated tools can produce errors, omissions, or inaccurate outputs, and that ProcuraLogic is not liable for any such errors, omissions, or outcomes arising from the use of AI or automated tools as part of our services. By purchasing our services, you consent to this use.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">2. Eligibility</h3>
-                    <p>By purchasing our services, you confirm that you are at least 18 years old and have the legal capacity to enter into a binding agreement. You agree to provide accurate and complete information. ProcuraLogic reserves the right to refuse, suspend, or terminate service at our sole discretion.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">3. Payments and Refunds</h3>
-                    <p>All payments are processed securely through Stripe. Prices are listed in USD and are due at the time of purchase. If you are unsatisfied with the service provided and we have not yet delivered your review, you may request a full refund by contacting us at procuralogic@gmail.com. Once a completed review has been delivered, refunds are issued at our discretion on a case-by-case basis.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">4. Delivery</h3>
-                    <p>Written contract reviews are typically delivered within 48 hours of receiving your contract. Complex contracts may take longer. Consultation sessions are scheduled via Calendly after payment and conducted via Google Meet.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">5. Confidentiality</h3>
-                    <p>All contracts and documents you submit are treated as confidential. We do not share, sell, or retain your documents beyond the completion and delivery of your review. Files are deleted after delivery unless you request otherwise.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">6. Limitation of Liability</h3>
-                    <p>ProcuraLogic's services are advisory in nature and provided on an "as is" and "as available" basis without warranties of any kind, express or implied. We make no guarantees regarding specific outcomes, cost savings, successful negotiations, or contract results. To the fullest extent permitted by law, ProcuraLogic and its owner are not liable for any direct, indirect, incidental, consequential, or punitive damages, including any decisions you make based on our review, losses or damages arising from your use of our services, or any outcomes related to contracts you sign or negotiate. Our maximum aggregate liability to you is limited to the amount you paid for the specific service in question.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">7. Governing Law</h3>
-                    <p>These Terms are governed by the laws of the jurisdiction in which ProcuraLogic operates, without regard to conflict of laws principles. Any disputes arising from these Terms or our services will be resolved through good faith negotiation, and if unresolved, through binding arbitration or the courts of that jurisdiction.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">8. Intellectual Property</h3>
-                    <p>All review materials, frameworks, and deliverables provided by ProcuraLogic are for your personal or internal business use only. You may not resell, redistribute, or publish our deliverables without written permission.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">9. Changes to Terms</h3>
-                    <p>We may update these terms from time to time. Continued use of our services after changes constitutes acceptance of the updated terms.</p>
-                </div>
-            </details>
-            <details id="privacy" class="group bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
-                <summary class="flex cursor-pointer list-none text-sm font-semibold text-slate-700 pt-4 pr-4 pb-4 pl-4 items-center justify-between"><span>Privacy Policy</span><span class="transition group-open:rotate-180"><iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400"></iconify-icon></span></summary>
-                <div class="p-6 pt-0 text-xs text-slate-500 space-y-4 leading-relaxed border-t border-slate-200 mt-2 bg-white">
-                    <div class="text-[10px] text-slate-400 mb-2 pt-4">Last updated: April 2026</div>
-                    <h3 class="font-semibold text-slate-700 text-sm">1. Information We Collect</h3>
-                    <p>When you use our services, we may collect: your name, email address, and phone number (provided at checkout); payment information (processed securely by Stripe, we do not store card details); contract documents you submit for review; and any information you share during consultation sessions.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">2. How We Use Your Information</h3>
-                    <p>We use your information to deliver the services you purchased, communicate with you about your review or consultation, send receipts and follow-up correspondence, and improve our services.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">3. Information Sharing</h3>
-                    <p>We do not sell, rent, or share your personal information with third parties, except: Stripe (for payment processing), Calendly (for scheduling consultations), and Google Workspace (for email and video consultations). These third-party services have their own privacy policies governing how they handle your data.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">4. Document Handling</h3>
-                    <p>Contracts and documents you submit are used solely for the purpose of delivering your review. We do not retain your documents after delivery is complete. We do not use your documents to train AI or machine learning models, for marketing, or for any other purpose beyond delivering your review. We may use automated tools or AI assistance to support the review process; when we do, any third-party AI service providers are selected for their data handling practices and are instructed not to retain, share, or train on your submitted content.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">5. Data Security</h3>
-                    <p>We take reasonable measures to protect your personal information, including using secure payment processing (Stripe), encrypted communication channels, and limiting access to your data to only those involved in delivering your service. However, no method of transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">6. Cookies</h3>
-                    <p>Our website uses minimal cookies for basic site functionality. We do not use tracking cookies or third-party advertising cookies.</p>
-                    <h3 class="font-semibold text-slate-700 text-sm">7. Your Rights</h3>
-                    <p>You may request access to the personal information we hold about you, ask us to delete your data, or opt out of any marketing communications at any time by emailing procuralogic@gmail.com.</p>
-                </div>
-            </details>
-        </section>
 
         <footer class="py-12 text-center border-t border-slate-200 mt-12">
             <div class="text-lg font-semibold tracking-tighter text-emerald-950 mb-2">Procura<span class="text-emerald-600">Logic</span></div>
             <p class="text-xs text-slate-500 mb-2">Contract Clarity and Review. Advisory only. Not legal advice.</p>
             <p class="text-xs text-slate-500 mb-6 max-w-xl mx-auto">For freelancers, founders, content creators, agencies, and small business owners who need a second set of eyes before they sign.</p>
-            <div class="flex justify-center gap-4 text-xs font-medium text-slate-400 mb-6"><a href="#terms" class="hover:text-emerald-600 transition-colors">Terms of Service</a><span>·</span><a href="#privacy" class="hover:text-emerald-600 transition-colors">Privacy Policy</a></div>
+            <div class="flex justify-center gap-4 text-xs font-medium text-slate-400 mb-6"><a href="terms.html" class="text-emerald-600 hover:text-emerald-700 underline transition-colors">Terms of Service</a><span>·</span><a href="privacy.html" class="text-emerald-600 hover:text-emerald-700 underline transition-colors">Privacy Policy</a></div>
             <p class="text-xs text-slate-400">© 2026 ProcuraLogic · <a href="mailto:procuralogic@gmail.com" class="text-emerald-600 hover:underline">procuralogic@gmail.com</a></p>
         </footer>
 
