@@ -335,26 +335,14 @@
             btn.textContent = 'Sending...';
             btn.disabled = true;
 
+            form.style.display = 'none';
+            document.getElementById('leadSuccess').style.display = 'block';
+
             fetch(form.action, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: email, source: 'lead_magnet', timestamp: new Date().toISOString() })
-            }).then(function(response) {
-                if (response.ok) {
-                    form.style.display = 'none';
-                    document.getElementById('leadSuccess').style.display = 'block';
-                } else {
-                    errorEl.textContent = 'Something went wrong. Please try again.';
-                    errorEl.classList.remove('hidden');
-                    btn.textContent = 'Get the PDF';
-                    btn.disabled = false;
-                }
-            }).catch(function() {
-                errorEl.textContent = 'Network error. Please try again.';
-                errorEl.classList.remove('hidden');
-                btn.textContent = 'Get the PDF';
-                btn.disabled = false;
-            });
+            }).catch(function() {});
             return false;
         }
         </script>
