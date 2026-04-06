@@ -4,6 +4,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProcuraLogic - Contract Clarity &amp; Review</title>
     <meta name="description" content="Manual contract review and advisory. Catch hidden risks before you sign. Built on 10+ years of procurement experience.">
+    <meta name="theme-color" content="#064e3b">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+    <meta property="og:title" content="ProcuraLogic - Contract Clarity & Review">
+    <meta property="og:description" content="Manual contract review and advisory. Catch hidden risks before you sign. Built on 10+ years of procurement experience.">
+    <meta property="og:url" content="https://procura-logic.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ProcuraLogic">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ProcuraLogic - Contract Clarity & Review">
+    <meta name="twitter:description" content="Manual contract review and advisory. Catch hidden risks before you sign.">
+    <link rel="canonical" href="https://procura-logic.com">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -18,8 +29,58 @@
         details > summary::-webkit-details-marker { display: none; }
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this legal advice?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. ProcuraLogic provides contract review and advisory services for educational purposes only. For legal advice specific to your situation, consult a licensed attorney."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between the $99 review and $125 consultation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The $99 review is written only. Submit your contract and receive feedback within 48 hours. The $125 consultation is a live discussion with real-time guidance. Choose the consultation if you want to ask questions directly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens after I pay for the $125 consultation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You will be taken to Calendly to select a session time. Once confirmed, you will get a meeting link for the live consultation at the scheduled time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does the written review take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most reviews are delivered within 48 hours. Complex contracts may take longer. A specific timeline is always confirmed upfront."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you use AI to review contracts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every review is prepared and finalized by a human. We may use automated tools or AI assistance to support parts of the review process, but all analysis and deliverables are reviewed by a person before being sent to you."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="font-sans antialiased bg-slate-50 text-slate-600 selection:bg-emerald-200 selection:text-emerald-900">
+
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-emerald-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-medium">Skip to main content</a>
 
     <nav class="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/70 border-b border-slate-200/60">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -31,24 +92,24 @@
                 <a href="#how" class="hover:text-emerald-950 transition-colors">How it works</a>
                 <a href="#faq" class="hover:text-emerald-950 transition-colors">FAQ</a>
             </div>
-            <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="hidden md:inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm tracking-tight">
+            <a href="#" data-stripe="quick" class="hidden md:inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm tracking-tight">
                 Get Started
             </a>
-            <button id="mobileMenuBtn" class="md:hidden text-slate-900" aria-label="Menu" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')">
+            <button id="mobileMenuBtn" class="md:hidden text-slate-900" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMobileMenu()">
                 <iconify-icon icon="solar:hamburger-menu-linear" class="text-2xl"></iconify-icon>
             </button>
         </div>
         <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white/95 backdrop-blur">
             <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-slate-600">
-                <a href="#pricing" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">Pricing</a>
-                <a href="#how" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">How it works</a>
-                <a href="#faq" onclick="document.getElementById('mobileMenu').classList.add('hidden')" class="hover:text-emerald-950">FAQ</a>
-                <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white px-4 py-2 rounded-lg shadow-sm">Get Started</a>
+                <a href="#pricing" onclick="toggleMobileMenu()" class="hover:text-emerald-950">Pricing</a>
+                <a href="#how" onclick="toggleMobileMenu()" class="hover:text-emerald-950">How it works</a>
+                <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-emerald-950">FAQ</a>
+                <a href="#" data-stripe="quick" class="inline-flex items-center justify-center bg-emerald-950 hover:bg-emerald-900 text-white px-4 py-2 rounded-lg shadow-sm">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full" id="top">
+    <main id="main" class="max-w-6xl mx-auto px-4 sm:px-6 w-full">
 
         <section class="relative mt-8 sm:mt-12 bg-emerald-950 rounded-3xl pt-20 pb-32 px-6 sm:px-12 text-center overflow-hidden shadow-xl shadow-emerald-900/10">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-full bg-gradient-to-b from-emerald-800/40 to-transparent blur-3xl rounded-full pointer-events-none"></div>
@@ -67,7 +128,7 @@
                     $200M+ contracts reviewed · $2M+ in cost insights identified
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                    <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="w-full sm:w-auto inline-flex items-center justify-center bg-white text-emerald-950 hover:bg-slate-50 text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm">
+                    <a href="#" data-stripe="quick" class="w-full sm:w-auto inline-flex items-center justify-center bg-white text-emerald-950 hover:bg-slate-50 text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm">
                         Upload Your Contract
                     </a>
                     <a href="#free-guide" class="w-full sm:w-auto inline-flex items-center justify-center bg-transparent border border-emerald-700 hover:bg-emerald-900/50 text-white text-sm font-medium px-6 py-3 rounded-xl transition-all">
@@ -175,7 +236,7 @@
                         <li class="flex items-start gap-2 text-sm text-slate-600"><iconify-icon icon="solar:check-circle-linear" class="text-emerald-500 text-base shrink-0 mt-0.5"></iconify-icon> Actionable suggestions</li>
                     </ul>
                     <div class="text-[11px] text-slate-500 bg-emerald-50/60 border border-emerald-100 rounded-lg p-3 mb-4 leading-relaxed">Most reviews delivered within 48 hours. Full refund available before delivery if not a fit.</div>
-                    <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm">Submit Contract</a>
+                    <a href="#" data-stripe="quick" class="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm">Submit Contract</a>
                 </div>
                 <div class="bg-white border-2 border-emerald-500 rounded-2xl p-8 flex flex-col shadow-md relative md:-mt-4 md:-mb-4 z-10">
                     <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[10px] font-semibold tracking-widest uppercase px-3 py-1 rounded-full">Recommended</div>
@@ -188,7 +249,7 @@
                         <li class="flex items-start gap-2 text-sm text-slate-600"><iconify-icon icon="solar:check-circle-linear" class="text-emerald-500 text-base shrink-0 mt-0.5"></iconify-icon> Clear next steps before you sign</li>
                     </ul>
                     <div class="text-[11px] text-slate-500 bg-emerald-50/60 border border-emerald-100 rounded-lg p-3 mb-4 leading-relaxed">Most reviews delivered within 48 hours. Full refund available before delivery if not a fit.</div>
-                    <a href="https://buy.stripe.com/4gMaEZ7ch7D1bqO1J2bQY02" class="w-full inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm shadow-emerald-600/20">Start Consultation</a>
+                    <a href="#" data-stripe="consultation" class="w-full inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm shadow-emerald-600/20">Start Consultation</a>
                     <div class="text-[10px] text-center text-emerald-600 font-medium mt-3">Limited slots this week.</div>
                 </div>
                 <div class="bg-white border border-slate-200/80 rounded-2xl p-8 flex flex-col shadow-sm">
@@ -203,7 +264,7 @@
                         <li class="flex items-start gap-2 text-sm text-slate-600"><iconify-icon icon="solar:check-circle-linear" class="text-emerald-500 text-base shrink-0 mt-0.5"></iconify-icon> 48-hour follow-up window</li>
                     </ul>
                     <div class="text-[11px] text-slate-500 bg-emerald-50/60 border border-emerald-100 rounded-lg p-3 mb-4 leading-relaxed">Most reviews delivered within 48 hours. Full refund available before delivery if not a fit.</div>
-                    <a href="https://buy.stripe.com/28E3cxeEJ4qP1QeevObQY05" class="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm">Book Strategy Session</a>
+                    <a href="#" data-stripe="strategy" class="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-3 rounded-xl transition-all shadow-sm">Book Strategy Session</a>
                 </div>
             </div>
             <div class="max-w-6xl mx-auto bg-slate-50 border border-slate-200/80 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm mt-6">
@@ -232,13 +293,14 @@
                     <span class="flex items-center gap-1"><iconify-icon icon="solar:check-circle-linear"></iconify-icon> Why each clause is risky</span>
                     <span class="flex items-center gap-1"><iconify-icon icon="solar:check-circle-linear"></iconify-icon> What to negotiate instead</span>
                 </div>
-                <div id="leadForm" class="max-w-md mx-auto">
+                <form id="leadForm" class="max-w-md mx-auto" action="https://formspree.io/f/xpwrwqkl" method="POST" onsubmit="return handleLeadSubmit(event)">
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <input type="email" id="leadEmail" placeholder="Enter your email" class="flex-grow bg-white border border-transparent rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
-                        <button onclick="handleLeadSubmit()" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm whitespace-nowrap">Get the PDF</button>
+                        <input type="email" name="email" id="leadEmail" placeholder="Enter your email" required class="flex-grow bg-white border border-transparent rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
+                        <button type="submit" id="leadSubmitBtn" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm whitespace-nowrap">Get the PDF</button>
                     </div>
+                    <p id="leadError" class="text-xs text-red-400 mt-2 hidden"></p>
                     <p class="text-xs text-emerald-400/60 mt-4">No spam. Unsubscribe anytime. Not legal advice.</p>
-                </div>
+                </form>
                 <div id="leadSuccess" style="display: none;" class="max-w-md mx-auto bg-white/10 border border-white/20 rounded-2xl p-8 backdrop-blur-sm">
                     <p class="text-base font-medium text-white mb-6">Download the guide below</p>
                     <a href="contract-guide.pdf" download class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm w-full sm:w-auto">Download PDF Guide</a>
@@ -246,7 +308,48 @@
                 </div>
             </div>
         </section>
-        <script>function handleLeadSubmit(){var e=document.getElementById('leadEmail').value;if(!e||!e.includes('@')){alert('Please enter a valid email address.');return;}document.getElementById('leadForm').style.display='none';document.getElementById('leadSuccess').style.display='block';}</script>
+        <script>
+        function handleLeadSubmit(event) {
+            event.preventDefault();
+            var form = document.getElementById('leadForm');
+            var email = document.getElementById('leadEmail').value.trim();
+            var errorEl = document.getElementById('leadError');
+            var btn = document.getElementById('leadSubmitBtn');
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            errorEl.classList.add('hidden');
+            if (!emailPattern.test(email)) {
+                errorEl.textContent = 'Please enter a valid email address.';
+                errorEl.classList.remove('hidden');
+                return false;
+            }
+
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email })
+            }).then(function(response) {
+                if (response.ok) {
+                    form.style.display = 'none';
+                    document.getElementById('leadSuccess').style.display = 'block';
+                } else {
+                    errorEl.textContent = 'Something went wrong. Please try again.';
+                    errorEl.classList.remove('hidden');
+                    btn.textContent = 'Get the PDF';
+                    btn.disabled = false;
+                }
+            }).catch(function() {
+                errorEl.textContent = 'Network error. Please try again.';
+                errorEl.classList.remove('hidden');
+                btn.textContent = 'Get the PDF';
+                btn.disabled = false;
+            });
+            return false;
+        }
+        </script>
 
         <section class="py-16 max-w-4xl mx-auto">
             <div class="bg-white border border-slate-200/60 rounded-3xl p-8 sm:p-12 shadow-sm">
@@ -281,7 +384,7 @@
             <div class="bg-gradient-to-b from-emerald-900 to-emerald-950 rounded-3xl p-8 sm:p-16 text-center max-w-4xl mx-auto shadow-xl shadow-emerald-900/10">
                 <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-6">Choose Your Review Option</h2>
                 <p class="text-lg text-emerald-400 font-medium italic mb-8">If something feels off in your contract, it usually is.</p>
-                <a href="https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01" class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-base font-semibold px-8 py-4 rounded-xl transition-all shadow-lg mb-6">Upload Your Contract</a>
+                <a href="#" data-stripe="quick" class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-base font-semibold px-8 py-4 rounded-xl transition-all shadow-lg mb-6">Upload Your Contract</a>
                 <div class="space-y-2">
                     <p class="text-xs text-emerald-300 font-medium">Limited review capacity each week to maintain quality.</p>
                     <p class="text-xs text-emerald-100/60">Secure checkout · One-time payment · From $99</p>
@@ -299,5 +402,22 @@
             <p class="text-xs text-slate-400">© 2026 ProcuraLogic · <a href="mailto:procuralogic@gmail.com" class="text-emerald-600 hover:underline">procuralogic@gmail.com</a></p>
         </footer>
 
-    </div>
+    </main>
+
+    <script>
+    var STRIPE_LINKS = {
+        quick: 'https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01',
+        consultation: 'https://buy.stripe.com/4gMaEZ7ch7D1bqO1J2bQY02',
+        strategy: 'https://buy.stripe.com/28E3cxeEJ4qP1QeevObQY05'
+    };
+    document.querySelectorAll('a[data-stripe]').forEach(function(el) {
+        el.href = STRIPE_LINKS[el.dataset.stripe];
+    });
+    function toggleMobileMenu() {
+        var menu = document.getElementById('mobileMenu');
+        var btn = document.getElementById('mobileMenuBtn');
+        var isHidden = menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', !isHidden);
+    }
+    </script>
 </body></html>
