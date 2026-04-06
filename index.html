@@ -293,7 +293,7 @@
                     <span class="flex items-center gap-1"><iconify-icon icon="solar:check-circle-linear"></iconify-icon> Why each clause is risky</span>
                     <span class="flex items-center gap-1"><iconify-icon icon="solar:check-circle-linear"></iconify-icon> What to negotiate instead</span>
                 </div>
-                <form id="leadForm" class="max-w-md mx-auto" action="https://formspree.io/f/xpwrwqkl" method="POST" onsubmit="return handleLeadSubmit(event)">
+                <form id="leadForm" class="max-w-md mx-auto" action="https://hook.us2.make.com/27ebglxokxr5hv190bx2vh3nxfkr9ysm" method="POST" onsubmit="return handleLeadSubmit(event)">
                     <div class="flex flex-col sm:flex-row gap-3">
                         <input type="email" name="email" id="leadEmail" placeholder="Enter your email" required class="flex-grow bg-white border border-transparent rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
                         <button type="submit" id="leadSubmitBtn" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium px-6 py-3 rounded-xl transition-all shadow-sm whitespace-nowrap">Get the PDF</button>
@@ -329,8 +329,8 @@
 
             fetch(form.action, {
                 method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, source: 'lead_magnet', timestamp: new Date().toISOString() })
             }).then(function(response) {
                 if (response.ok) {
                     form.style.display = 'none';
