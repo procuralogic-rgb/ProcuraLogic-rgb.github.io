@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Experience | ProcuraLogic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>body { font-family: 'Inter', sans-serif; } .star { cursor: pointer; transition: all 0.15s; } .star:hover, .star.active { color: #facc15; transform: scale(1.15); }</style>
+</head>
+<body class="bg-slate-50 text-slate-600 antialiased">
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="text-lg font-semibold tracking-tighter text-emerald-950">Procura<span class="text-emerald-600">Logic</span></a>
+            <a href="index.html" class="text-sm font-medium text-slate-500 hover:text-emerald-950">Back to home</a>
+        </div>
+    </nav>
+
+    <main class="max-w-xl mx-auto px-6 py-16">
+        <div class="text-center mb-10">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 mb-2">How was your experience?</h1>
+            <p class="text-sm text-slate-500">Takes 30 seconds. Your feedback helps us improve and helps others find us.</p>
+        </div>
+
+        <form id="surveyForm" class="space-y-8">
+            <!-- Rating -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-3">How would you rate your contract review?</label>
+                <div class="flex gap-2" id="starRating">
+                    <iconify-icon icon="solar:star-bold" class="star text-3xl text-slate-300" data-value="1" onclick="setRating(1)"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" class="star text-3xl text-slate-300" data-value="2" onclick="setRating(2)"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" class="star text-3xl text-slate-300" data-value="3" onclick="setRating(3)"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" class="star text-3xl text-slate-300" data-value="4" onclick="setRating(4)"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" class="star text-3xl text-slate-300" data-value="5" onclick="setRating(5)"></iconify-icon>
+                </div>
+                <input type="hidden" id="rating" name="rating" required>
+            </div>
+
+            <!-- Feedback -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-2">What was the most valuable part of the review?</label>
+                <textarea id="feedback" name="feedback" rows="4" required placeholder="e.g., Found a hidden auto-renewal clause I would have missed..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400"></textarea>
+            </div>
+
+            <!-- Recommend -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-3">Would you recommend ProcuraLogic?</label>
+                <div class="flex gap-3">
+                    <label class="flex-1 cursor-pointer"><input type="radio" name="recommend" value="Yes" class="peer sr-only" required><div class="peer-checked:border-emerald-500 peer-checked:bg-emerald-50 border border-slate-200 rounded-xl p-3 text-center text-sm font-medium transition-all hover:border-emerald-300">Yes</div></label>
+                    <label class="flex-1 cursor-pointer"><input type="radio" name="recommend" value="No" class="peer sr-only"><div class="peer-checked:border-red-500 peer-checked:bg-red-50 border border-slate-200 rounded-xl p-3 text-center text-sm font-medium transition-all hover:border-red-300">No</div></label>
+                </div>
+            </div>
+
+            <!-- Permission -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-3">Can we share your feedback on our website?</label>
+                <div class="flex flex-col gap-2">
+                    <label class="cursor-pointer"><input type="radio" name="permission" value="First Name Only" class="peer sr-only" required><div class="peer-checked:border-emerald-500 peer-checked:bg-emerald-50 border border-slate-200 rounded-xl p-3 text-sm font-medium transition-all hover:border-emerald-300">Yes, with my first name only</div></label>
+                    <label class="cursor-pointer"><input type="radio" name="permission" value="Full Name" class="peer sr-only"><div class="peer-checked:border-emerald-500 peer-checked:bg-emerald-50 border border-slate-200 rounded-xl p-3 text-sm font-medium transition-all hover:border-emerald-300">Yes, with my full name</div></label>
+                    <label class="cursor-pointer"><input type="radio" name="permission" value="No" class="peer sr-only"><div class="peer-checked:border-slate-400 peer-checked:bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium transition-all hover:border-slate-300">No, keep it private</div></label>
+                </div>
+            </div>
+
+            <!-- Contract type -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-2">What type of contract did we review?</label>
+                <select id="contractType" name="contractType" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="">Select one</option>
+                    <option value="SaaS">SaaS / Software</option>
+                    <option value="Vendor">Vendor / Service Agreement</option>
+                    <option value="Freelance">Freelance / Contractor</option>
+                    <option value="Employment">Employment</option>
+                    <option value="Brand Deal">Brand Deal / Sponsorship</option>
+                    <option value="Lease">Lease / Real Estate</option>
+                    <option value="NDA">NDA</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <!-- Amount saved (optional) -->
+            <div>
+                <label class="block text-sm font-semibold text-slate-900 mb-2">Did the review save you money or avoid a problem? <span class="text-slate-400 font-normal">(optional)</span></label>
+                <input type="text" id="amountSaved" name="amountSaved" placeholder="e.g., Saved $12,000 on auto-renewal, Avoided 18-month lock-in..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
+            </div>
+
+            <!-- Name and email -->
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-900 mb-2">Your name</label>
+                    <input type="text" id="clientName" name="clientName" required placeholder="Kevin G." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-900 mb-2">Your email</label>
+                    <input type="email" id="clientEmail" name="clientEmail" required placeholder="kevin@example.com" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-slate-400">
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-6 py-4 rounded-xl transition-all shadow-sm shadow-emerald-600/20">Submit Feedback</button>
+            <p id="errorMsg" class="text-xs text-red-500 hidden text-center"></p>
+        </form>
+
+        <div id="successMsg" style="display:none" class="text-center py-16">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-6"><iconify-icon icon="solar:check-circle-bold" class="text-emerald-600 text-3xl"></iconify-icon></div>
+            <h2 class="text-xl font-bold text-slate-900 mb-2">Thank you!</h2>
+            <p class="text-sm text-slate-500 mb-6">Your feedback means everything to us. It helps other professionals find the clarity they need before signing.</p>
+            <a href="index.html" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all">Back to ProcuraLogic</a>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center border-t border-slate-200">
+        <p class="text-xs text-slate-400">ProcuraLogic | <a href="mailto:hello@procura-logic.com" class="text-emerald-600 hover:underline">hello@procura-logic.com</a></p>
+    </footer>
+
+    <script>
+    var selectedRating = 0;
+    function setRating(val) {
+        selectedRating = val;
+        document.getElementById('rating').value = val;
+        document.querySelectorAll('#starRating .star').forEach(function(star) {
+            var v = parseInt(star.getAttribute('data-value'));
+            if (v <= val) { star.classList.add('active'); star.style.color = '#facc15'; }
+            else { star.classList.remove('active'); star.style.color = '#cbd5e1'; }
+        });
+    }
+
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var errorEl = document.getElementById('errorMsg');
+        errorEl.classList.add('hidden');
+
+        if (!selectedRating) { errorEl.textContent = 'Please select a star rating.'; errorEl.classList.remove('hidden'); return; }
+
+        var btn = document.getElementById('submitBtn');
+        btn.textContent = 'Submitting...'; btn.disabled = true;
+
+        var data = {
+            source: 'survey',
+            rating: selectedRating,
+            feedback: document.getElementById('feedback').value,
+            recommend: document.querySelector('input[name="recommend"]:checked').value,
+            permission: document.querySelector('input[name="permission"]:checked').value,
+            contractType: document.getElementById('contractType').value,
+            amountSaved: document.getElementById('amountSaved').value,
+            clientName: document.getElementById('clientName').value,
+            clientEmail: document.getElementById('clientEmail').value,
+            timestamp: new Date().toISOString()
+        };
+
+        document.getElementById('surveyForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+
+        fetch('https://hook.us2.make.com/e1v2qvx75b2nuaa2rmo16f840e91lgjh', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).catch(function() {});
+    });
+    </script>
+</body>
+</html>
