@@ -581,12 +581,82 @@
     };
     document.querySelectorAll('a[data-stripe]').forEach(function(el) {
         el.href = STRIPE_LINKS[el.dataset.stripe];
+        el.addEventListener('click', function() {
+            gtag('event', 'begin_checkout', {
+                event_category: 'conversion',
+                event_label: el.dataset.stripe,
+                value: el.dataset.stripe === 'quick' ? 99 : el.dataset.stripe === 'consultation' ? 125 : 299
+            });
+        });
     });
+
+    // Track lead magnet downloads
+    var leadForm = document.getElementById('leadForm');
+    if (leadForm) {
+        leadForm.addEventListener('submit', function() {
+            gtag('event', 'generate_lead', {
+                event_category: 'conversion',
+                event_label: 'lead_magnet_download'
+            });
+        });
+    }
+
+    // Track email clicks
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+            gtag('event', 'contact', {
+                event_category: 'engagement',
+                event_label: 'email_click'
+            });
+        });
+    });
+
+    // Track scroll depth
+    var scrollMarkers = [25, 50, 75, 100];
+    var scrollFired = {};
+    window.addEventListener('scroll', function() {
+        var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        scrollMarkers.forEach(function(mark) {
+            if (scrollPct >= mark && !scrollFired[mark]) {
+                scrollFired[mark] = true;
+                gtag('event', 'scroll_depth', {
+                    event_category: 'engagement',
+                    event_label: mark + '_percent',
+                    value: mark
+                });
+            }
+        });
+    });
+
     function toggleMobileMenu() {
         var menu = document.getElementById('mobileMenu');
         var btn = document.getElementById('mobileMenuBtn');
         var isHidden = menu.classList.toggle('hidden');
         btn.setAttribute('aria-expanded', !isHidden);
     }
+    </script>
+
+    <!-- Scroll-triggered engagement hook -->
+    <div id="scrollCTA" style="display:none" class="fixed bottom-0 left-0 right-0 z-50 bg-emerald-950 border-t border-emerald-800 px-4 py-3 shadow-2xl transition-all">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
+            <p class="text-sm text-emerald-100 font-medium hidden sm:block">Have a contract that needs a second pair of eyes?</p>
+            <p class="text-xs text-emerald-100 font-medium sm:hidden">Need a contract reviewed?</p>
+            <div class="flex items-center gap-3 shrink-0">
+                <a href="#" data-stripe="quick" class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-xs sm:text-sm font-bold px-4 sm:px-6 py-2.5 rounded-lg transition-all" onclick="this.href=STRIPE_LINKS.quick">Get Reviewed ($99) &rarr;</a>
+                <button onclick="document.getElementById('scrollCTA').style.display='none'" class="text-emerald-400 hover:text-white text-lg">&times;</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    var scrollCTAShown = false;
+    window.addEventListener('scroll', function() {
+        if (scrollCTAShown) return;
+        var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        if (scrollPct >= 40) {
+            document.getElementById('scrollCTA').style.display = 'block';
+            scrollCTAShown = true;
+            gtag('event', 'scroll_cta_shown', { event_category: 'engagement' });
+        }
+    });
     </script>
 </body></html>
