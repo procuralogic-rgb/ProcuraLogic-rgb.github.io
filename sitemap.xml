@@ -2,18 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://procura-logic.com/</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-04-08</lastmod>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://procura-logic.com/privacy.html</loc>
-    <lastmod>2026-04-06</lastmod>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://procura-logic.com/terms.html</loc>
-    <lastmod>2026-04-06</lastmod>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://procura-logic.com/review.html</loc>
@@ -24,5 +14,15 @@
     <loc>https://procura-logic.com/thank-you.html</loc>
     <lastmod>2026-04-07</lastmod>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://procura-logic.com/privacy.html</loc>
+    <lastmod>2026-04-06</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://procura-logic.com/terms.html</loc>
+    <lastmod>2026-04-06</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>
