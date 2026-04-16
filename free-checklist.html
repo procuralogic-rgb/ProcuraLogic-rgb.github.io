@@ -170,38 +170,19 @@ a{color:#059669;text-decoration:none}
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    /*
-     * MailerLite Integration
-     * =====================
-     * Replace the setTimeout below with a fetch() call to the MailerLite API
-     * to add the subscriber to your list. Example:
-     *
-     * fetch('https://connect.mailerlite.com/api/subscribers', {
-     *   method: 'POST',
-     *   headers: {
-     *     'Content-Type': 'application/json',
-     *     'Authorization': 'Bearer YOUR_MAILERLITE_API_KEY'
-     *   },
-     *   body: JSON.stringify({
-     *     email: email,
-     *     groups: ['YOUR_GROUP_ID']
-     *   })
-     * }).then(() => { showSuccess(); });
-     *
-     * NOTE: Exposing API keys in client-side JS is not ideal for production.
-     * For a static site, consider using MailerLite's embedded form or
-     * a serverless function (Cloudflare Worker, Netlify Function) as a proxy.
-     *
-     * Simplest option: Replace this entire form with a MailerLite embedded
-     * form snippet from your MailerLite dashboard (Forms > Embedded forms).
-     */
-
-    // Simulated success — replace with real integration
-    setTimeout(function(){
+    // Send to Make.com Inbound Pipeline webhook (lead magnet route)
+    fetch('https://hook.us2.make.com/e1v2qvx75b2nuaa2rmo16f840e91lgjh', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'free-checklist', type: 'lead_magnet' })
+    }).then(function(){
       form.style.display = 'none';
       success.style.display = 'block';
-      console.log('[ProcuraLogic] Lead captured:', email);
-    }, 800);
+    }).catch(function(){
+      // Show download anyway — don't block the user
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
   });
 
   emailInput.addEventListener('input', function(){
