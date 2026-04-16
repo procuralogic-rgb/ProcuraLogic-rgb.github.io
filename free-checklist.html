@@ -174,7 +174,7 @@ a{color:#059669;text-decoration:none}
     fetch('https://hook.us2.make.com/e1v2qvx75b2nuaa2rmo16f840e91lgjh', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: 'free-checklist', type: 'lead_magnet' })
+      body: JSON.stringify({ email: email, name: '', source: 'lead_magnet' })
     }).then(function(){
       form.style.display = 'none';
       success.style.display = 'block';
