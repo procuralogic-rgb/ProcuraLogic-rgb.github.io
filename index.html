@@ -717,4 +717,399 @@
         }
     });
     </script>
+
+<!--
+  ProcuraLogic Sales Assistant Chat Widget
+  =========================================
+  No external dependencies. No backend. Works on static sites.
+  Stripe links, FAQs, and flow logic are all configurable below.
+-->
+
+<style>
+#pl-chat-bubble{position:fixed;bottom:24px;right:24px;z-index:9999;width:60px;height:60px;border-radius:50%;background:#059669;color:#fff;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;font-family:system-ui,-apple-system,sans-serif}
+#pl-chat-bubble:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.22)}
+#pl-chat-bubble svg{width:28px;height:28px;fill:currentColor}
+#pl-chat-bubble .pl-close{display:none;font-size:28px;line-height:1}
+#pl-chat-bubble.open svg{display:none}
+#pl-chat-bubble.open .pl-close{display:block}
+
+#pl-chat-window{position:fixed;bottom:96px;right:24px;z-index:9998;width:370px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 120px);border-radius:16px;background:#fff;box-shadow:0 8px 40px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden;font-family:system-ui,-apple-system,sans-serif}
+#pl-chat-window.open{display:flex}
+
+#pl-chat-header{background:#0f172a;color:#fff;padding:16px 20px;display:flex;align-items:center;gap:10px}
+#pl-chat-header .pl-avatar{width:36px;height:36px;border-radius:50%;background:#059669;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+#pl-chat-header .pl-htext h4{margin:0;font-size:14px;font-weight:600}
+#pl-chat-header .pl-htext p{margin:0;font-size:11px;color:#94a3b8;margin-top:1px}
+
+#pl-chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8fafc}
+.pl-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13.5px;line-height:1.55;animation:plFade .3s ease}
+.pl-msg.bot{background:#fff;color:#334155;border:1px solid #e2e8f0;align-self:flex-start;border-bottom-left-radius:4px}
+.pl-msg.user{background:#059669;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.pl-msg a{color:#059669;font-weight:600;text-decoration:none}
+.pl-msg.user a{color:#fff;text-decoration:underline}
+@keyframes plFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+#pl-chat-options{padding:12px 16px;display:flex;flex-direction:column;gap:6px;background:#f8fafc;border-top:1px solid #e2e8f0}
+.pl-opt{background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;padding:9px 14px;font-size:13px;color:#334155;cursor:pointer;text-align:left;transition:border-color .15s,background .15s;font-family:inherit}
+.pl-opt:hover{border-color:#059669;background:#ecfdf5;color:#065f46}
+
+#pl-chat-input-area{padding:10px 16px;background:#fff;border-top:1px solid #e2e8f0;display:none;gap:8px;align-items:center}
+#pl-chat-input-area input{flex:1;border:1.5px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:13px;outline:none;font-family:inherit}
+#pl-chat-input-area input:focus{border-color:#059669}
+#pl-chat-input-area button{background:#059669;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+#pl-chat-input-area button:hover{background:#047857}
+
+.pl-typing{display:flex;gap:4px;padding:10px 14px;align-self:flex-start}
+.pl-typing span{width:7px;height:7px;background:#94a3b8;border-radius:50%;animation:plBounce .6s infinite alternate}
+.pl-typing span:nth-child(2){animation-delay:.2s}
+.pl-typing span:nth-child(3){animation-delay:.4s}
+@keyframes plBounce{to{transform:translateY(-5px);opacity:.5}}
+
+@media(max-width:420px){
+  #pl-chat-window{bottom:0;right:0;width:100%;height:100vh;max-height:100vh;border-radius:0}
+  #pl-chat-bubble{bottom:16px;right:16px;width:54px;height:54px}
+}
+</style>
+
+<button id="pl-chat-bubble" aria-label="Chat with ProcuraLogic">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/><path d="M7 9h10v2H7zm0-3h10v2H7z"/></svg>
+  <span class="pl-close">&times;</span>
+</button>
+
+<div id="pl-chat-window">
+  <div id="pl-chat-header">
+    <div class="pl-avatar">PL</div>
+    <div class="pl-htext">
+      <h4>ProcuraLogic</h4>
+      <p>Contract clarity assistant</p>
+    </div>
+  </div>
+  <div id="pl-chat-body"></div>
+  <div id="pl-chat-options"></div>
+  <div id="pl-chat-input-area">
+    <input type="text" placeholder="Type your email..." id="pl-chat-input">
+    <button id="pl-chat-send">Send</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const CONFIG = {
+    products: {
+      glossary:   { name: 'Vendor Contract Glossary', price: '$20', url: 'https://buy.stripe.com/8x27sNaot6yXgL8bjCbQY0d' },
+      prepKit:    { name: 'Contract Clarity Prep Kit', price: '$47', url: 'https://buy.stripe.com/3cIeVf8glg9x1QeafybQY0c' },
+      review:     { name: 'Quick Contract Review', price: '$99', url: 'https://buy.stripe.com/9B6dRbdAF9L9gL8cnGbQY01' },
+      consult:    { name: 'Contract Clarity Consultation', price: '$125', url: 'https://buy.stripe.com/4gMaEZ7ch7D1bqO1J2bQY02' }
+    },
+    email: 'hello@procura-logic.com',
+    autoOpenDelay: 20000,
+    proactiveMsg: 'Need help choosing the right option?'
+  };
+
+  const FAQS = [
+    { triggers: ['legal advice','lawyer','attorney','law'],
+      answer: 'ProcuraLogic is not a law firm and does not provide legal advice. We offer procurement-focused contract analysis \u2014 plain-language risk identification, clause breakdowns, and negotiation guidance. For litigation, regulatory opinions, or binding legal counsel, you should work with an attorney.' },
+    { triggers: ['how long','how fast','turnaround','when','48 hours','time'],
+      answer: 'The written Quick Review ($99) is delivered within 48 hours, often sooner. The live Consultation ($125) is scheduled at a time that works for you, usually within a few days. The digital products (Prep Kit and Glossary) are delivered instantly after purchase.' },
+    { triggers: ['refund','money back','guarantee'],
+      answer: 'Yes \u2014 for the Quick Review ($99), you get a full refund if you cancel before delivery. Digital products (Prep Kit and Glossary) are non-refundable since they\'re delivered instantly, but if you\'re not satisfied, email us and we\'ll work it out.' },
+    { triggers: ['what\'s included','what do i get','include','deliverable'],
+      answer: 'It depends on which option you choose! I can help you find the right one. Are you looking at the digital resources (Prep Kit / Glossary) or a full contract review?' },
+    { triggers: ['confidential','private','secure','delete','files'],
+      answer: '100% confidential. Your contract files are deleted after delivery. We never share or retain your documents beyond what\'s needed to complete your review.' },
+    { triggers: ['difference','compare','which one','vs'],
+      answer: 'Good question \u2014 let me help you find the right fit. It depends on where you are in the process. Do you have a specific contract you need reviewed, or are you looking to build your own review skills?' }
+  ];
+
+  const FLOW = {
+    start: {
+      bot: "Hi! I'm ProcuraLogic's contract clarity assistant. I can help you find the right resource for your situation. What brings you here today?",
+      options: [
+        { label: "I have a contract to review", next: 'hasContract' },
+        { label: "I want to learn to review contracts myself", next: 'selfServe' },
+        { label: "I have a question", next: 'faqMode' },
+        { label: "Just browsing", next: 'browsing' }
+      ]
+    },
+    hasContract: {
+      bot: "Got it \u2014 you have something on your desk. How complex is it?",
+      options: [
+        { label: "Simple agreement (under $10K)", next: 'simpleContract' },
+        { label: "Mid-range ($5K\u2013$50K) or I have questions", next: 'midContract' },
+        { label: "High-value or multi-year deal", next: 'bigContract' },
+        { label: "Not sure \u2014 I just want someone to look at it", next: 'unsure' }
+      ]
+    },
+    simpleContract: {
+      bot: "For straightforward agreements, the <strong>Quick Contract Review</strong> is your best bet. You get a full written analysis with risk ratings, clause breakdowns, and specific negotiation recommendations \u2014 delivered in 48 hours.\n\n<strong>" + CONFIG.products.review.price + "</strong> \u00b7 Written review \u00b7 48-hour turnaround\n\n<a href=\"" + CONFIG.products.review.url + "\" target=\"_blank\">Get Your Contract Reviewed \u2192</a>",
+      options: [
+        { label: "That sounds right", next: 'closing' },
+        { label: "What exactly is included?", next: 'reviewDetails' },
+        { label: "I want to try reviewing it myself first", next: 'selfServe' }
+      ]
+    },
+    midContract: {
+      bot: "For contracts in the $5K\u2013$50K range, I'd recommend the <strong>Contract Clarity Consultation</strong>. You get everything in the written review PLUS a 30-minute live walkthrough where you can ask questions in real time and get negotiation guidance.\n\n<strong>" + CONFIG.products.consult.price + "</strong> \u00b7 Live session \u00b7 30 minutes\n\n<a href=\"" + CONFIG.products.consult.url + "\" target=\"_blank\">Book Your Consultation \u2192</a>",
+      options: [
+        { label: "Let's do it", next: 'closing' },
+        { label: "The $99 written review might be enough", next: 'simpleContract' },
+        { label: "I want to prep myself first", next: 'selfServe' }
+      ]
+    },
+    bigContract: {
+      bot: "For high-value or complex agreements, I'd recommend starting with the <strong>Contract Clarity Consultation ($125)</strong> to assess scope. For enterprise-level contracts, we also offer custom engagements.\n\nEmail us at <strong>" + CONFIG.email + "</strong> with details and we'll scope it for you.\n\n<a href=\"" + CONFIG.products.consult.url + "\" target=\"_blank\">Book a Consultation \u2192</a>",
+      options: [
+        { label: "I'll book the consultation", next: 'closing' },
+        { label: "I'll email instead", next: 'emailClose' },
+        { label: "Let me think about it", next: 'captureEmail' }
+      ]
+    },
+    unsure: {
+      bot: "No problem. If you want a professional to handle it, the <strong>Quick Review (" + CONFIG.products.review.price + ")</strong> is the easiest way to start \u2014 just upload your contract and get a full written analysis in 48 hours.\n\nIf you want to take a first pass yourself, grab the <strong>Prep Kit (" + CONFIG.products.prepKit.price + ")</strong> \u2014 it walks you through exactly what to look for.\n\n<a href=\"" + CONFIG.products.review.url + "\" target=\"_blank\">Get the Review (" + CONFIG.products.review.price + ")</a> \u00b7 <a href=\"" + CONFIG.products.prepKit.url + "\" target=\"_blank\">Get the Prep Kit (" + CONFIG.products.prepKit.price + ")</a>",
+      options: [
+        { label: "I'll go with the review", next: 'closing' },
+        { label: "I'll start with the Prep Kit", next: 'closingPrepKit' },
+        { label: "Let me think about it", next: 'captureEmail' }
+      ]
+    },
+    selfServe: {
+      bot: "Smart move \u2014 building your own review skills pays off every time you sign something. What's your priority?",
+      options: [
+        { label: "I want a step-by-step review framework", next: 'recPrepKit' },
+        { label: "I need to understand contract terms better", next: 'recGlossary' },
+        { label: "Both \u2014 I want the full toolkit", next: 'recBoth' }
+      ]
+    },
+    recPrepKit: {
+      bot: "The <strong>Contract Clarity Prep Kit</strong> is exactly that \u2014 a pre-review checklist, question framework, and clause assessment worksheet. Work through it before reviewing any contract.\n\n<strong>" + CONFIG.products.prepKit.price + "</strong> \u00b7 Instant PDF delivery\n\n<a href=\"" + CONFIG.products.prepKit.url + "\" target=\"_blank\">Get the Prep Kit \u2192</a>",
+      options: [
+        { label: "I'll grab it", next: 'closingPrepKit' },
+        { label: "I also want the Glossary", next: 'recBoth' },
+        { label: "Actually, I'd rather have someone review my contract", next: 'hasContract' }
+      ]
+    },
+    recGlossary: {
+      bot: "The <strong>Vendor Contract Glossary</strong> covers 40+ contract terms in plain language with real-world impact tags (lock-in risk, financial limit, hidden loss). Use it as a quick reference during any negotiation.\n\n<strong>" + CONFIG.products.glossary.price + "</strong> \u00b7 Instant PDF delivery\n\n<a href=\"" + CONFIG.products.glossary.url + "\" target=\"_blank\">Get the Glossary \u2192</a>",
+      options: [
+        { label: "I'll grab it", next: 'closingGlossary' },
+        { label: "I also want the Prep Kit", next: 'recBoth' },
+        { label: "Actually, I need a full contract review", next: 'hasContract' }
+      ]
+    },
+    recBoth: {
+      bot: "Great combo. The <strong>Prep Kit (" + CONFIG.products.prepKit.price + ")</strong> gives you the review framework, and the <strong>Glossary (" + CONFIG.products.glossary.price + ")</strong> makes sure you understand every term you encounter. Together they're $" + (parseInt(CONFIG.products.prepKit.price.replace('$',''))+parseInt(CONFIG.products.glossary.price.replace('$',''))) + " total.\n\n<a href=\"" + CONFIG.products.prepKit.url + "\" target=\"_blank\">Get the Prep Kit (" + CONFIG.products.prepKit.price + ")</a>\n<a href=\"" + CONFIG.products.glossary.url + "\" target=\"_blank\">Get the Glossary (" + CONFIG.products.glossary.price + ")</a>",
+      options: [
+        { label: "Perfect, grabbing both", next: 'closing' },
+        { label: "I'll start with just one", next: 'selfServe' },
+        { label: "Maybe I should just get a review instead", next: 'hasContract' }
+      ]
+    },
+    reviewDetails: {
+      bot: "Every Quick Review includes:\n\n\u2022 <strong>Contract overview</strong> \u2014 type, parties, term, value, key dates\n\u2022 <strong>Risk assessment</strong> \u2014 every red flag rated High/Medium/Low\n\u2022 <strong>Financial analysis</strong> \u2014 pricing traps, hidden costs\n\u2022 <strong>Actionable recommendations</strong> \u2014 specific changes to negotiate\n\u2022 <strong>Plain-language explanations</strong> \u2014 no legal jargon\n\nDelivered as a written report within 48 hours.",
+      options: [
+        { label: "I'm in \u2014 let's do it", next: 'closing' },
+        { label: "What about the live consultation?", next: 'midContract' },
+        { label: "Let me think about it", next: 'captureEmail' }
+      ]
+    },
+    faqMode: {
+      bot: "Sure, ask me anything about ProcuraLogic's services. Type your question below.",
+      inputMode: true
+    },
+    browsing: {
+      bot: "No pressure! Here's a quick overview of what we offer:\n\n<strong>Self-service tools:</strong> Prep Kit (" + CONFIG.products.prepKit.price + ") and Glossary (" + CONFIG.products.glossary.price + ") \u2014 instant PDF delivery.\n\n<strong>Done-for-you:</strong> Written Review (" + CONFIG.products.review.price + ", 48hrs) or Live Consultation (" + CONFIG.products.consult.price + ", 30min).\n\nFeel free to explore, and reach out anytime at " + CONFIG.email + ".",
+      options: [
+        { label: "Tell me about the self-service tools", next: 'selfServe' },
+        { label: "I actually do have a contract to review", next: 'hasContract' },
+        { label: "I have a question", next: 'faqMode' }
+      ]
+    },
+    captureEmail: {
+      bot: "Totally fair. Want me to send you a quick summary of the options so you can come back when you're ready? Just drop your email below.",
+      inputMode: true,
+      inputType: 'email'
+    },
+    closing: {
+      bot: "Great choice. Click the link above to get started \u2014 the process takes about 30 seconds. If you have any questions along the way, I'm here or you can reach us at " + CONFIG.email + ". Good luck with your contract!",
+      options: [
+        { label: "Thanks!", next: 'end' },
+        { label: "I have another question", next: 'faqMode' }
+      ]
+    },
+    closingPrepKit: {
+      bot: "Here's your link: <a href=\"" + CONFIG.products.prepKit.url + "\" target=\"_blank\">Get the Prep Kit (" + CONFIG.products.prepKit.price + ") \u2192</a>\n\nIt's delivered instantly as a PDF. Work through it before your next contract review \u2014 the difference is night and day. Questions? " + CONFIG.email,
+      options: [
+        { label: "Thanks!", next: 'end' },
+        { label: "I also want the Glossary", next: 'recGlossary' }
+      ]
+    },
+    closingGlossary: {
+      bot: "Here's your link: <a href=\"" + CONFIG.products.glossary.url + "\" target=\"_blank\">Get the Glossary (" + CONFIG.products.glossary.price + ") \u2192</a>\n\nKeep it open during your next negotiation. You'll be surprised how many terms you thought you understood. Questions? " + CONFIG.email,
+      options: [
+        { label: "Thanks!", next: 'end' },
+        { label: "I also want the Prep Kit", next: 'recPrepKit' }
+      ]
+    },
+    emailClose: {
+      bot: "Sounds good. Send your details to <strong>" + CONFIG.email + "</strong> and we'll get back to you within 24 hours. Include the contract type and any specific concerns if you can.",
+      options: [
+        { label: "Will do, thanks!", next: 'end' },
+        { label: "Actually, I'll just book the consultation", next: 'closing' }
+      ]
+    },
+    end: {
+      bot: "You're all set. This chat will stay here if you need anything else. Good luck! \ud83e\udd1d",
+      options: []
+    }
+  };
+
+  const $ = s => document.querySelector(s);
+  const body = $('#pl-chat-body');
+  const opts = $('#pl-chat-options');
+  const inputArea = $('#pl-chat-input-area');
+  const input = $('#pl-chat-input');
+  const sendBtn = $('#pl-chat-send');
+  const bubble = $('#pl-chat-bubble');
+  const win = $('#pl-chat-window');
+
+  let currentStep = null;
+  let isOpen = false;
+  let hasOpened = false;
+
+  function toggleChat(){
+    isOpen = !isOpen;
+    win.classList.toggle('open', isOpen);
+    bubble.classList.toggle('open', isOpen);
+    if(isOpen && !hasOpened){
+      hasOpened = true;
+      goTo('start');
+    }
+  }
+
+  bubble.addEventListener('click', toggleChat);
+
+  function addMsg(text, sender){
+    const d = document.createElement('div');
+    d.className = 'pl-msg ' + sender;
+    d.innerHTML = text.replace(/\n/g,'<br>');
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function showTyping(){
+    const t = document.createElement('div');
+    t.className = 'pl-typing';
+    t.id = 'pl-typing';
+    t.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(t);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function hideTyping(){
+    const t = $('#pl-typing');
+    if(t) t.remove();
+  }
+
+  function showOptions(options){
+    opts.innerHTML = '';
+    opts.style.display = options.length ? 'flex' : 'none';
+    options.forEach(o => {
+      const b = document.createElement('button');
+      b.className = 'pl-opt';
+      b.textContent = o.label;
+      b.addEventListener('click', () => {
+        addMsg(o.label, 'user');
+        opts.style.display = 'none';
+        if(o.next) goTo(o.next);
+      });
+      opts.appendChild(b);
+    });
+  }
+
+  function showInput(type){
+    inputArea.style.display = 'flex';
+    opts.style.display = 'none';
+    input.type = type === 'email' ? 'email' : 'text';
+    input.placeholder = type === 'email' ? 'your@email.com' : 'Type your question...';
+    input.value = '';
+    input.focus();
+  }
+
+  function handleInput(){
+    const val = input.value.trim();
+    if(!val) return;
+    addMsg(val, 'user');
+    inputArea.style.display = 'none';
+    input.value = '';
+
+    const step = FLOW[currentStep];
+    if(step && step.inputType === 'email'){
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        addMsg("Thanks! We'll send you a summary at <strong>" + val + "</strong>. In the meantime, feel free to explore the site or ask me anything else.", 'bot');
+        console.log('[ProcuraLogic Chat] Email captured:', val);
+        showOptions([
+          { label: "Show me the options again", next: 'browsing' },
+          { label: "I'm good, thanks!", next: 'end' }
+        ]);
+      }, 800);
+    } else {
+      handleFaq(val);
+    }
+  }
+
+  sendBtn.addEventListener('click', handleInput);
+  input.addEventListener('keydown', e => { if(e.key === 'Enter') handleInput(); });
+
+  function handleFaq(question){
+    const q = question.toLowerCase();
+    let matched = FAQS.find(f => f.triggers.some(t => q.includes(t)));
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      if(matched){
+        addMsg(matched.answer, 'bot');
+      } else {
+        addMsg("Good question \u2014 that's a bit outside what I can cover here. For anything specific, reach out to <strong>" + CONFIG.email + "</strong> and we'll get back to you quickly.", 'bot');
+      }
+      showOptions([
+        { label: "I have a contract to review", next: 'hasContract' },
+        { label: "Show me the self-service tools", next: 'selfServe' },
+        { label: "Ask another question", next: 'faqMode' }
+      ]);
+    }, 900);
+  }
+
+  function goTo(step){
+    currentStep = step;
+    const s = FLOW[step];
+    if(!s) return;
+
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      addMsg(s.bot, 'bot');
+      if(s.inputMode){
+        showInput(s.inputType || 'text');
+      } else {
+        showOptions(s.options || []);
+      }
+    }, 600 + Math.random() * 400);
+  }
+
+  if(CONFIG.autoOpenDelay > 0){
+    const visited = sessionStorage.getItem('pl-chat-opened');
+    if(!visited){
+      setTimeout(() => {
+        if(!isOpen){
+          toggleChat();
+          sessionStorage.setItem('pl-chat-opened','1');
+        }
+      }, CONFIG.autoOpenDelay);
+    }
+  }
+})();
+</script>
+
 </body></html>
