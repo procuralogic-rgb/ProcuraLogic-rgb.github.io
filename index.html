@@ -91,6 +91,7 @@
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-500">
                 <a href="#pricing" class="hover:text-emerald-950 transition-colors">Pricing</a>
                 <a href="#how" class="hover:text-emerald-950 transition-colors">How it works</a>
+                <a href="#resources" class="hover:text-emerald-950 transition-colors">Resources</a>
                 <a href="#faq" class="hover:text-emerald-950 transition-colors">FAQ</a>
             </div>
             <a href="#" data-stripe="quick" class="hidden md:inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all shadow-sm shadow-emerald-600/20 tracking-tight">
@@ -104,6 +105,7 @@
             <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-slate-600">
                 <a href="#pricing" onclick="toggleMobileMenu()" class="hover:text-emerald-950">Pricing</a>
                 <a href="#how" onclick="toggleMobileMenu()" class="hover:text-emerald-950">How it works</a>
+                <a href="#resources" onclick="toggleMobileMenu()" class="hover:text-emerald-950">Resources</a>
                 <a href="#faq" onclick="toggleMobileMenu()" class="hover:text-emerald-950">FAQ</a>
                 <a href="#" data-stripe="quick" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg shadow-sm font-semibold">Get Your Contract Reviewed &rarr;</a>
             </div>
@@ -317,6 +319,31 @@
             </div>
         </section>
 
+        <!-- ==================== SELF-SERVICE RESOURCES (downsell after pricing) ==================== -->
+        <section id="resources" class="py-16 max-w-4xl mx-auto">
+            <div class="text-center mb-10"><div class="text-xs font-semibold tracking-widest uppercase text-emerald-600 mb-3">Self-Service Resources</div><h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Not ready for a full review? Start here.</h2><p class="text-sm text-slate-500 mt-2">Instant PDF delivery. Use them before you review any contract.</p></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4"><iconify-icon icon="solar:checklist-minimalistic-linear" class="text-emerald-600 text-2xl"></iconify-icon></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Contract Clarity Prep Kit</h3>
+                    <p class="text-sm text-slate-500 mb-4">Pre-review checklist, question framework, and clause assessment worksheet. Work through it before reviewing any contract.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-emerald-950">$47</span>
+                        <a href="https://buy.stripe.com/3cIeVf8glg9x1QeafybQY0c" class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">Buy Now &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4"><iconify-icon icon="solar:book-minimalistic-linear" class="text-emerald-600 text-2xl"></iconify-icon></div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Vendor Contract Glossary</h3>
+                    <p class="text-sm text-slate-500 mb-4">40 contract terms explained in plain language. Covers vendor agreements, SaaS contracts, and service agreements. Use it as a reference anytime.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-emerald-950">$20</span>
+                        <a href="https://buy.stripe.com/8x27sNaot6yXgL8bjCbQY0d" class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">Buy Now &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ==================== WHY NOT A LAWYER ==================== -->
         <section class="py-16 max-w-4xl mx-auto">
             <div class="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-8 sm:p-10">
@@ -507,7 +534,7 @@
             </div>
         </section>
 
-        <!-- ==================== FREE GUIDE — UPGRADED ==================== -->
+        <!-- ==================== FREE GUIDE — GATEWAY TO PREP KIT ==================== -->
         <section id="free-guide" class="py-24">
             <div class="bg-emerald-950 rounded-3xl p-8 sm:p-16 max-w-4xl mx-auto shadow-xl shadow-emerald-900/10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 pointer-events-none">
@@ -515,9 +542,9 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div class="text-left">
-                        <div class="text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-3">Free Download</div>
-                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">Download this BEFORE you sign anything.</h2>
-                        <p class="text-sm text-emerald-100/80 mb-6">The 6 contract red flags that cost people thousands. We see them every single week. This checklist shows you exactly what to look for.</p>
+                        <div class="text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-3">Start With the Free Checklist</div>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-4">Spot the 6 red flags that cost people thousands.</h2>
+                        <p class="text-sm text-emerald-100/80 mb-6">Download the free checklist, then go deeper with the <a href="#resources" class="text-emerald-400 underline hover:text-emerald-300 transition-colors">Contract Clarity Prep Kit</a> ($47) for the full pre-review framework.</p>
                         <div class="space-y-3 mb-6">
                             <div class="flex items-start gap-2 text-sm text-emerald-200"><iconify-icon icon="solar:check-circle-bold" class="text-emerald-400 shrink-0 mt-0.5"></iconify-icon> Auto-renewal traps &amp; how to spot them</div>
                             <div class="flex items-start gap-2 text-sm text-emerald-200"><iconify-icon icon="solar:check-circle-bold" class="text-emerald-400 shrink-0 mt-0.5"></iconify-icon> Hidden fee structures in vendor contracts</div>
@@ -534,9 +561,13 @@
                             <p class="text-xs text-emerald-400/60 mt-4 text-center">No spam. Unsubscribe anytime.</p>
                         </form>
                         <div id="leadSuccess" style="display: none;" class="max-w-md mx-auto bg-white/10 border border-white/20 rounded-2xl p-8 backdrop-blur-sm text-center">
-                            <p class="text-base font-bold text-white mb-6">Your checklist is ready</p>
-                            <a href="contract-guide.pdf" download class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-sm font-bold px-6 py-3.5 rounded-xl transition-all shadow-sm w-full">Download PDF Now &rarr;</a>
-                            <p class="text-xs text-emerald-200 mt-4">Check your email. We sent a copy there too.</p>
+                            <p class="text-base font-bold text-white mb-4">Your checklist is ready</p>
+                            <a href="contract-guide.pdf" download class="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-emerald-950 text-sm font-bold px-6 py-3.5 rounded-xl transition-all shadow-sm w-full mb-3">Download PDF Now &rarr;</a>
+                            <p class="text-xs text-emerald-200 mb-4">Check your email. We sent a copy there too.</p>
+                            <div class="border-t border-white/10 pt-4">
+                                <p class="text-xs text-emerald-300 font-semibold mb-2">Ready to go deeper?</p>
+                                <a href="https://buy.stripe.com/3cIeVf8glg9x1QeafybQY0c" class="inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-3 rounded-xl transition-all shadow-sm w-full">Get the Full Prep Kit ($47) &rarr;</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -559,31 +590,6 @@
             return false;
         }
         </script>
-
-        <!-- ==================== DIGITAL PRODUCTS ==================== -->
-        <section class="py-16 max-w-4xl mx-auto">
-            <div class="text-center mb-10"><div class="text-xs font-semibold tracking-widest uppercase text-emerald-600 mb-3">Self-Service Resources</div><h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Not ready for a full review? Start here.</h2><p class="text-sm text-slate-500 mt-2">Instant PDF delivery. Use them before you review any contract.</p></div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div class="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4"><iconify-icon icon="solar:checklist-minimalistic-linear" class="text-emerald-600 text-2xl"></iconify-icon></div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Contract Clarity Prep Kit</h3>
-                    <p class="text-sm text-slate-500 mb-4">Pre-review checklist, question framework, and clause assessment worksheet. Work through it before reviewing any contract.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-emerald-950">$47</span>
-                        <a href="https://buy.stripe.com/3cIeVf8glg9x1QeafybQY0c" class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">Buy Now &rarr;</a>
-                    </div>
-                </div>
-                <div class="bg-white border border-slate-200/80 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4"><iconify-icon icon="solar:book-minimalistic-linear" class="text-emerald-600 text-2xl"></iconify-icon></div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Vendor Contract Glossary</h3>
-                    <p class="text-sm text-slate-500 mb-4">40 contract terms explained in plain language. Covers vendor agreements, SaaS contracts, and service agreements. Use it as a reference anytime.</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-emerald-950">$20</span>
-                        <a href="https://buy.stripe.com/8x27sNaot6yXgL8bjCbQY0d" class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all">Buy Now &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- ==================== FAQ ==================== -->
         <section id="faq" class="py-24 max-w-3xl mx-auto">
